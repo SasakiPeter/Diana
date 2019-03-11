@@ -1,3 +1,13 @@
 from django.shortcuts import render
 
-# Create your views here.
+
+def index(request):
+    return render(request, 'diaries/index.html')
+
+
+def detail(request):
+    return render(request, 'diaries/detail.html')
+
+
+def create(request):
+    return render(request, 'diaries/create.html')
