@@ -1,0 +1,8 @@
+{% extends 'base.html' %} {% block link %}
+<form class="form-inline" action="{% url 'accounts:index' %}" method="GET">
+  {% csrf_token %}
+  <button class="btn btn-sm btn-outline-secondary" type="submit">戻る</button>
+</form>
+{% endblock %} {% block main %}
+<p>this is {{ user }}'s page.</p>
+{% endblock %}

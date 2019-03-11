@@ -1,0 +1,13 @@
+{% extends 'base.html' %} {% block link %}
+<form class="form-inline" action="{% url 'accounts:logout' %}" method="post">
+  {% csrf_token %}
+  <button class="btn btn-sm btn-outline-secondary" type="submit">Logout</button>
+</form>
+{% endblock %} {% block main %} {% for user in user_list %}
+<ul>
+  <li>
+    <a href="{% url 'accounts:detail' user.id %}">{{ user }}</a
+    >:{{ user.is_authenticated }}
+  </li>
+</ul>
+{% endfor %} {% endblock %}
