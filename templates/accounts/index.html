@@ -1,7 +1,9 @@
 {% extends 'base.html' %} {% block link %}
-<form class="form-inline" action="{% url 'accounts:logout' %}" method="post">
+<form class="form-inline" action="{% url 'accounts:signout' %}" method="post">
   {% csrf_token %}
-  <button class="btn btn-sm btn-outline-secondary" type="submit">Logout</button>
+  <button class="btn btn-sm btn-outline-secondary" type="submit">
+    Sign out
+  </button>
 </form>
 {% endblock %} {% block main %} {% for user in user_list %}
 <ul>

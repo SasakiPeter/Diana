@@ -1,12 +1,12 @@
 {% extends 'base.html' %} {% block link %}
-<form class="form-inline" action="{% url 'accounts:login' %}" method="GET">
+<form class="form-inline" action="{% url 'accounts:signup' %}" method="GET">
   {% csrf_token %}
   <button class="btn btn-sm btn-outline-secondary" type="submit">
-    Log in
+    Sign up
   </button>
 </form>
 {% endblock %} {% block main %}
-<form action="{% url 'accounts:create' %}" method="post">
+<form action="{% url 'accounts:signin' %}" method="post">
   {% csrf_token %}
   <div class="form-group">
     <label for="username">User Name</label>
@@ -28,17 +28,14 @@
       placeholder="Password"
     />
   </div>
-  <div class="form-group">
-    <label for="email">Email Address</label>
-    <input
-      type="email"
-      class="form-control"
-      id="email"
-      name="email"
-      placeholder="Email Address"
-    />
-  </div>
-  <button type="submit" class="btn btn-primary">Sign up</button>
+  <button type="submit" class="btn btn-primary">Log in</button>
 </form>
 
-{% endblock %}
+{% if error_message %}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+  <span>{{ error_message }}</span>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{% endif %} {% endblock %}

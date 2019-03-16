@@ -1,8 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import generic
-from django.contrib.auth import authenticate
-from django.contrib.auth import login as auth_login
-from django.contrib.auth import logout as auth_logout
+from django.contrib.auth import authenticate, login, logout
 # from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import User
@@ -13,7 +11,7 @@ def index(request):
         user_list = User.objects.all()
         return render(request, 'accounts/index.html', {'user_list': user_list})
     else:
-        return redirect('accounts:login')
+        return redirect('accounts:signin')
 
 
 class DetailView(LoginRequiredMixin, generic.DetailView):
@@ -21,35 +19,35 @@ class DetailView(LoginRequiredMixin, generic.DetailView):
     template_name = 'accounts/detail.html'
 
 
-def login(request):
+def signin(request):
     if request.method == "GET":
-        return render(request, 'accounts/login.html')
+        return render(request, 'accounts/signin.html')
 
     if request.method == "POST":
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(request, username=username, password=password)
         if user is not None:
-            auth_login(request, user)
-            # diaries:index
+            login(request, user)
+            # diaries index
             return redirect('accounts:index')
         else:
             message = "invalid login"
-            return render(request, 'accounts/login.html', {'error_message': message})
+            return render(request, 'accounts/signin.html', {'error_message': message})
 
 
-def logout(request):
+def signout(request):
     if request.method == "POST":
-        auth_logout(request)
+        logout(request)
     # diaries:index
     return redirect('accounts:index')
 
 
-def create(request):
+def signup(request):
     if request.method == "GET":
-        return render(request, 'accounts/create.html')
+        return render(request, 'accounts/signup.html')
 
     if request.method == "POST":
         #  Userモデルから、新規ユーザーを作成し、DBに登録する
         # 認証用のメール送ったりしないといけない。
-        return redirect('account:index')
+        return redirect('accounts:index')
