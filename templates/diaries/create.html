@@ -1,5 +1,13 @@
-{% extends "base.html" %} {% block link %}
-<button>hoge</button>
-{% endblock %} {% block main %}
-<h1>Hello. This is create.</h1>
+{% extends 'base.html' %}
+{% block main %}
+<div class='container'>
+    <div>
+        <a href="{% url 'diaries:index' %}">ホームに戻る</a>
+    </div>
+
+    <form action="{% url 'diaries:create' %}" method="POST">{% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn btn-primary" type="submit">保存</button>
+    </form>
+</div>
 {% endblock %}

@@ -1,5 +1,51 @@
-{% extends "base.html" %} {% block link %}
+{% extends "base.html" %}
+
+{% block link %}
 <button>hoge</button>
-{% endblock %} {% block main %}
-<h1>Hello. This is index.</h1>
+{% endblock %}
+
+{% block main %}
+
+<body>
+    <h1 style="text-align: center;">Diary</h1>
+    <h2 style="text-align: center;">
+        <a href="{% url 'diaries:create' %}">新規作成</a>
+    </h2>
+    <div style="width: 70%;margin: 0px auto;">
+
+        <div class='container'>
+            <table class='table'>
+                <thead>
+                    <tr>
+                        <th>タイトル</th>
+                        <th>本文</th>
+                        <th>投稿日</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for diary in diary_list %}
+                    <tr>
+                        <td>{{ diary.title }}</td>
+                        <td>{{ diary.text | truncatechars:100 }}</td>
+                        <td>{{ diary.pub_date }}</td>
+                        <td style="text-align: right;">
+                            <a href="{% url 'diaries:detail' diary.pk %}">記事を読む</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {% if page_obj.has_previous %}
+        <a href='?page={{ page_obj.previous_page_number }}'>前へ</a>
+        {% endif %}
+
+
+        {% if page_obj.has_next %}
+        <a href='?page={{ page_obj.next_page_number }}'>次へ</a>
+        {% endif %}
+
+</body>
+
 {% endblock %}
