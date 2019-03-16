@@ -17,7 +17,8 @@
                 <a href="{% url 'diaries:index' %}">トップページに戻る</a>
             </div>
             <form method="post" action="{% url 'diaries:delete' diary.pk %}">{% csrf_token %}
-                <button class="btn" type="submit" onclick='return confirm("本当に削除しますか？");'>削除</button>
+                <button type="submit" class="btn btn-outline-warning"
+                    onclick='return confirm("本当に削除しますか？");'>削除</button>
             </form>
         </div>
     </div>
