@@ -12,6 +12,7 @@ django = "*"
 gunicorn = "*"
 django-heroku = "*"
 watson-developer-cloud = "*"
+django-widget-tweaks = "*"
 
 [requires]
 python_version = "3.7"
