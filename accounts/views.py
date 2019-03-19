@@ -48,7 +48,7 @@ def signin(request):
             # diaries index
             return redirect('accounts:index')
         else:
-            message = "invalid login"
+            message = "不正なログインです。"
             return render(request, 'accounts/signin.html', {'form': login_form, 'error_message': message})
 
 
@@ -120,7 +120,8 @@ def signup_complete(request, token):
                 if not user.is_active:
                     user.is_active = True
                     user.save()
-                    login(request, user)
+                    login(request, user,
+                          backend='django.contrib.auth.backends.ModelBackend')
                     # diaries index
                     return redirect('accounts:index')
 

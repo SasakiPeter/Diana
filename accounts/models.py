@@ -74,7 +74,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
 
     def __str__(self):
-        return self.username
+        return f"{self.username} :  {self.email}"
 
     objects = UserManager()
 
@@ -85,8 +85,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     class Meta:
         verbose_name = _('user')
         verbose_name_plural = _('users')
-        # swappable = 'AUTH_USER_MODEL'
-        # abstract = True
 
     def clean(self):
         super().clean()
