@@ -68,9 +68,16 @@ TEMPLATES = [
     },
 ]
 
-AUTH_USER_MODEL = 'accounts.User'
 
 WSGI_APPLICATION = 'config.wsgi.application'
+
+
+# Authentication
+AUTH_USER_MODEL = 'accounts.User'
+AUTHENTICATION_BACKENDS = (
+    'accounts.authbackend.UsernameOrEmailBackend',
+    'django.contrib.auth.backends.ModelBackend'
+)
 
 
 # Database

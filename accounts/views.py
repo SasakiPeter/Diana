@@ -1,17 +1,17 @@
 from django.conf import settings
-from django.http import HttpResponseBadRequest
-from django.core.mail import send_mail
-from django.core.signing import BadSignature, SignatureExpired, loads, dumps
-from django.views import generic
 from django.contrib.auth import authenticate, login, logout
 # from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.sites.shortcuts import get_current_site
-from django.template.loader import get_template
+from django.core.mail import send_mail
+from django.core.signing import BadSignature, SignatureExpired, loads, dumps
+from django.http import HttpResponseBadRequest
 from django.shortcuts import render, redirect, get_object_or_404
+from django.template.loader import get_template
+from django.views import generic
+from logging import getLogger
 from .forms import LoginForm, SignUpForm
 from .models import User
-from logging import getLogger
 
 logger = getLogger(__name__)
 
@@ -40,7 +40,6 @@ def signin(request):
             return render(request, 'accounts/signin.html', {'form': login_form})
 
     if request.method == "POST":
-        # emailでの認証にする
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(request, username=username, password=password)
@@ -72,6 +71,7 @@ def signup(request):
 
     if request.method == "POST" and signup_form.is_valid():
         user = signup_form.save(commit=False)
+        user.display_name = user.username
         user.is_active = False
         user.save()
 
