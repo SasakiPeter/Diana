@@ -34,8 +34,7 @@ def signin(request):
 
     if request.method == "GET":
         if request.user.is_authenticated:
-            # diaries:index
-            return redirect('accounts:index')
+            return redirect('diaries:index')
         else:
             return render(request, 'accounts/signin.html', {'form': login_form})
 
@@ -45,8 +44,7 @@ def signin(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            # diaries index
-            return redirect('accounts:index')
+            return redirect('diaries:index')
         else:
             message = "不正なログインです。"
             return render(request, 'accounts/signin.html', {'form': login_form, 'error_message': message})
@@ -55,8 +53,7 @@ def signin(request):
 def signout(request):
     if request.method == "POST":
         logout(request)
-    # diaries:index
-    return redirect('accounts:index')
+    return redirect('diaries:index')
 
 
 def signup(request):
@@ -64,8 +61,7 @@ def signup(request):
 
     if request.method == "GET":
         if request.user.is_authenticated:
-            # diaries:index
-            return redirect('accounts:index')
+            return redirect('diaries:index')
         else:
             return render(request, 'accounts/signup.html', {'form': signup_form})
 
@@ -122,7 +118,6 @@ def signup_complete(request, token):
                     user.save()
                     login(request, user,
                           backend='django.contrib.auth.backends.ModelBackend')
-                    # diaries index
-                    return redirect('accounts:index')
+                    return redirect('diaries:index')
 
     return HttpResponseBadRequest()

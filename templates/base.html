@@ -26,6 +26,7 @@
         {% block link %} {% endblock %}
       </nav>
     </header>
+
     <main class="container py-5">
       {% block main %}
       <h1>This is main block.</h1>
@@ -35,5 +36,6 @@
     <script src="{% static 'js/jquery-3.3.1.slim.min.js' %}"></script>
     <script src="{% static 'js/popper.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    {% block js %}{% endblock %}
   </body>
 </html>

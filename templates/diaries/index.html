@@ -1,0 +1,49 @@
+{% extends "base.html" %} {% block link %}
+<form class="form-inline" action="{% url 'accounts:signout' %}" method="post">
+  {% csrf_token %}
+  <button class="btn btn-sm btn-outline-secondary" type="submit">
+    ログアウト
+  </button>
+</form>
+{% endblock %} {% block main %}
+
+<h2 style="text-align: center;">Diary</h1>
+<p style="text-align: center;">
+  <a href="{% url 'diaries:create' %}">新規作成</a>
+</p>
+<P>こんにちは{{user.display_name}}</P>
+<ul>
+    <li>{{user.email}}</li>
+    <li>{{user.display_name}}</li>
+    <li>{{user.username}}</li>
+    <li>{{user.is_authenticated}}</li>
+    <li>{{user.is_active}}</li>
+    <li>{{user.date_joined}}</li>
+</ul>
+<div style="width: 70%;margin: 0px auto;">
+  <div class="container">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>タイトル</th>
+          <th>本文</th>
+          <th>投稿日</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for diary in diary_list %}
+        <tr>
+          <td>{{ diary.title }}</td>
+          <td>{{ diary.text |truncatechars:100 }}</td>
+          <td>{{ diary.pub_date }}</td>
+          <td style="text-align: right;">
+            <a href="{% url 'diaries:detail' diary.pk %}">記事を読む</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  {% include 'diaries/paging.html' %} {% endblock %}
+</div>
