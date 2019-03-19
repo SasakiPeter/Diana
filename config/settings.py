@@ -28,6 +28,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'widget_tweaks',
     'diaries.apps.DiariesConfig',
     'accounts.apps.AccountsConfig',
     'api.apps.ApiConfig',
@@ -123,12 +124,16 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 
+# Login endpoint
+LOGIN_URL = 'accounts:signin'
+LOGIN_REDIRECT_URL = 'diaries:index'
+
+
 try:
     from .local_settings import *
 except ImportError:
     pass
 
 if not DEBUG:
-    SECRET_KEY = os.environ['SECRET_KEY']
     import django_heroku
     django_heroku.settings(locals())

@@ -1,14 +1,25 @@
 {% extends 'base.html' %} {% block link %}
-<form class="form-inline" action="{% url 'accounts:signup' %}" method="GET">
-  {% csrf_token %}
+<form class="form-inline" action="{% url 'accounts:signup' %}" method="get">
   <button class="btn btn-sm btn-outline-secondary" type="submit">
-    Sign up
+    アカウント作成
   </button>
 </form>
 {% endblock %} {% block main %}
 <form action="{% url 'accounts:signin' %}" method="post">
   {% csrf_token %}
   <div class="form-group">
+    {{ form.username.label_tag }}
+    {{ form.username }}
+  </div>
+  <div class="form-group">
+    {{ form.email.label_tag }}
+    {{ form.email }}
+  </div>
+  <div class="form-group">
+    {{ form.password.label_tag }}
+    {{ form.password }}
+  </div>
+  <!-- <div class="form-group">
     <label for="username">User Name</label>
     <input
       type="text"
@@ -27,8 +38,16 @@
       name="password"
       placeholder="Password"
     />
+  </div> -->
+  <button type="submit" class="btn btn-primary">ログイン</button>
+  {% if form.errors %} {% for field in form %} {% for error in field.errors %}
+  <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <span>{{ error }}</span>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
   </div>
-  <button type="submit" class="btn btn-primary">Log in</button>
+  {% endfor %} {% endfor %} {% endif %}
 </form>
 
 {% if error_message %}
