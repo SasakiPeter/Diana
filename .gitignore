@@ -119,3 +119,6 @@ dmypy.json
 
 # vscode stuff
 .vscode
+
+# sqlite3 migrations
+migrations/
