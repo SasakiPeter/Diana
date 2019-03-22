@@ -8,19 +8,15 @@
 
 <body>
     <h1 style="text-align: center;">{{ diary.title }}</h1>
+    <br>
     <div style="width: 70%;margin: 0px auto;">
-        <div class='container'>
-            <div style="margin: 60px 20px;">
-                {{ diary.text | linebreaks | urlize }}
-            </div>
-            <div style="text-align: center; margin-top: 50px">
-                <a href="{% url 'diaries:index' %}">トップページに戻る</a>
-            </div>
-            <form method="post" action="{% url 'diaries:delete' diary.pk %}">{% csrf_token %}
-                <button type="submit" class="btn btn-outline-warning"
-                    onclick='return confirm("本当に削除しますか？");'>削除</button>
-            </form>
+        <div class='container' style="text-align: center;">
+            {{ diary.text | linebreaks | urlize }}
         </div>
+        <div style="text-align: center; margin-top: 50px">
+            <a href="{% url 'diaries:index' %}">トップページに戻る</a>
+        </div>
+    </div>
     </div>
 </body>
 {% endblock %}
