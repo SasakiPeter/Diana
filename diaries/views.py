@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -6,7 +7,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 # from django.views import generic
 # from django.views.decorators.http import require_POST
 from .models import Diary
-from .form import DiaryForm
+from .form import DiaryForm, DiarySearchForm
 
 User = get_user_model()
 
@@ -28,18 +29,29 @@ def paginate_query(request, queryset, count):
     return page_obj
 
 
-PAGE_PER_ITEM = 1
+PAGE_PER_ITEM = 5
 
 
 @login_required()
 def index(request):
+    form = DiarySearchForm(request.POST)
     diary_list = Diary.objects.filter(user=request.user)
     page_obj = paginate_query(request, diary_list, PAGE_PER_ITEM)
+
+    if request.method == 'POST':
+        if form.is_valid():
+            diary_list = Diary.objects.filter(user=request.user)
+            diary_list = diary_list.filter(
+                Q(title__icontains=form.cleaned_data['title']) |
+                Q(text__icontains=form.cleaned_data['title'])
+            )
+            page_obj = paginate_query(request, diary_list, PAGE_PER_ITEM)
 
     contexts = {
         'diary_list': diary_list,
         'user': request.user,
-        'page_obj': page_obj
+        'page_obj': page_obj,
+        'form': form
     }
 
     return render(request, 'diaries/index.html', contexts)

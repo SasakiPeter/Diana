@@ -13,6 +13,7 @@ gunicorn = "*"
 django-heroku = "*"
 watson-developer-cloud = "*"
 django-widget-tweaks = "*"
+psycopg2-binary = "*"
 
 [requires]
 python_version = "3.7"

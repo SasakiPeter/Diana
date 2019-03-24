@@ -7,53 +7,63 @@
 </form>
 {% endblock %} {% block main %}
 
-<h2 style="text-align: center;">Diary</h1>
-  <p style="text-align: center;">
-    <a href="{% url 'diaries:create' %}">新規作成</a>
-  </p>
-  <P>こんにちは{{user.display_name}}</P>
-  <ul>
-    <li>{{user.email}}</li>
-    <li>{{user.display_name}}</li>
-    <li>{{user.username}}</li>
-    <li>{{user.is_authenticated}}</li>
-    <li>{{user.is_active}}</li>
-    <li>{{user.date_joined}}</li>
-  </ul>
-  <div style="width: 70%;margin: 0px auto;">
-    <div class="container">
-      <table class="table">
-        <thead>
-          <tr>
-            <th>タイトル</th>
-            <th>本文</th>
-            <th>投稿日</th>
-            <th scope='col'>操作</th>
+<h1 style="text-align: center;">Diary</h1>
+<p style="text-align: center;">
+  <a href="{% url 'diaries:create' %}">
+    <button type="submit" class="btn btn-outline-primary" ;'>新規作成</button>
+  </a>
+</p>
+<P>こんにちは{{user.display_name}}</P>
+<ul>
+  <li>{{user.email}}</li>
+  <li>{{user.display_name}}</li>
+  <li>{{user.username}}</li>
+  <li>{{user.is_authenticated}}</li>
+  <li>{{user.is_active}}</li>
+  <li>{{user.date_joined}}</li>
+</ul>
 
-          </tr>
-        </thead>
-        <tbody>
-          {% for diary in page_obj %}
-          <tr>
-            <td>{{ diary.title }}</td>
-            <td>{{ diary.text |truncatechars:100 }}</td>
-            <td>{{ diary.pub_date }}</td>
-            <td>
-              <form method="get" action="{% url 'diaries:detail' diary.pk %}">
-                <button type="submit" class="btn btn-outline-primary"
-                  onclick='return confirm("本当に見ますか？後悔しますよ？");'>詳細</button>
-            </td>
-            <td>
-              </form>
-              <form method="post" action="{% url 'diaries:delete' diary.pk %}">{% csrf_token %}
-                <button type="submit" class="btn btn-outline-danger" onclick='return confirm("本当に削除しますか？");'>削除</button>
-              </form>
-            </td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
+<p>
+  <form action="{% url 'diaries:index' %}" method="POST" style="text-align: center">
+    {% csrf_token %}
+    {{ form }}
+    <button type="submit">Search</button>
+  </form>
+</p>
+<div style="width: 70%;margin: 0px auto;">
+  <div class="container">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>タイトル</th>
+          <th>本文</th>
+          <th>投稿日</th>
+          <th scope='col'> </th>
+          <th scope='col'> </th>
 
-    {% include 'diaries/paging.html' %} {% endblock %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for diary in page_obj %}
+        <tr>
+          <td>{{ diary.title }}</td>
+          <td>{{ diary.summary |truncatechars:100 }}</td>
+          <td>{{ diary.pub_date }}</td>
+          <td>
+            <form method="get" action="{% url 'diaries:detail' diary.pk %}">
+              <button type="submit" class="btn btn-outline-primary" ;'>詳細</button>
+            </form>
+          </td>
+          <td>
+            <form method="post" action="{% url 'diaries:delete' diary.pk %}">{% csrf_token %}
+              <button type="submit" class="btn btn-outline-danger" onclick='return confirm("後悔しませんね？");'>削除</button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
   </div>
+
+  {% include 'diaries/paging.html' %} {% endblock %}
+</div>

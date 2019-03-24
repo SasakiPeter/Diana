@@ -8,14 +8,22 @@
 
 <body>
     <h1 style="text-align: center;">{{ diary.title }}</h1>
-    <br>
     <div style="width: 70%;margin: 0px auto;">
-        <div class='container' style="text-align: center;">
-            {{ diary.text | linebreaks | urlize }}
-        </div>
-        <div style="text-align: center; margin-top: 50px">
-            <a href="{% url 'diaries:index' %}">トップページに戻る</a>
-        </div>
+        <p>
+            <div class='container' style="text-align: center;">
+                {{ diary.text | linebreaks | urlize }}
+            </div>
+        </p>
+        <p>
+            <div class='container' style="text-align: center;">
+                {{ diary.pub_date }}
+            </div>
+        </p>
+        <p>
+            <div style="text-align: center; margin-top: 50px">
+                <a href="{% url 'diaries:index' %}">トップページに戻る</a>
+            </div>
+        </p>
     </div>
     </div>
 </body>

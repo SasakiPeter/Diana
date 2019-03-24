@@ -7,11 +7,8 @@ from .models import Diary
 class DiaryForm(ModelForm):
     class Meta:
         model = Diary
-        fields = ['title', 'text']
+        fields = ['title', 'text', 'pub_date']
 
 
 class DiarySearchForm(forms.Form):
-    title = forms.CharField(label="title", max_length=200, required=False)
-
-
-DiarySearchFormSet = forms.formset_factory(DiarySearchForm, extra=1)
+    title = forms.CharField(label="", max_length=200, required=False)
