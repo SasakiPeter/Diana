@@ -7,11 +7,14 @@
 {% block main %}
 
 <body>
-    <h1 style="text-align: center;">{{ diary.title }}</h1>
+    <h2 style="text-align: center;">{{ diary.title }}</h2>
     <div style="width: 70%;margin: 0px auto;">
         <p>
-            <div class='container' style="text-align: center;">
-                {{ diary.text | linebreaks | urlize }}
+            <div class="form-group">
+                <label for="exampleFormControlTextarea1">本文</label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="10">
+                {{ diary.text | urlize }}
+                </textarea>
             </div>
         </p>
         <p>

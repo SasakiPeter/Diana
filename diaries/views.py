@@ -84,3 +84,20 @@ def delete(request, diary_id):
         memo = get_object_or_404(Diary, id=diary_id)
         memo.delete()
     return redirect('diaries:index')
+
+
+@login_required
+def update(request, diary_id):
+
+    diary = get_object_or_404(Diary, id=diary_id)
+
+    form = DiaryForm(request.POST or None, instance=diary)
+
+    if request.method == "POST" and form.is_valid():
+        form.save()
+        return redirect("diaries:index")
+
+    context = {
+        "form": form
+    }
+    return render(request, "diaries/update.html", context)

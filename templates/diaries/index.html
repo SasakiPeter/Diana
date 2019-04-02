@@ -27,7 +27,7 @@
   <form action="{% url 'diaries:index' %}" method="POST" style="text-align: center">
     {% csrf_token %}
     {{ form }}
-    <button type="submit">Search</button>
+    <button type="submit" class="btn btn-primary">検索</button>
   </form>
 </p>
 <div style="width: 70%;margin: 0px auto;">
@@ -35,9 +35,10 @@
     <table class="table">
       <thead>
         <tr>
-          <th>タイトル</th>
+          <th>題名</th>
           <th>本文</th>
           <th>投稿日</th>
+          <th scope='col'> </th>
           <th scope='col'> </th>
           <th scope='col'> </th>
 
@@ -52,6 +53,11 @@
           <td>
             <form method="get" action="{% url 'diaries:detail' diary.pk %}">
               <button type="submit" class="btn btn-outline-primary" ;'>詳細</button>
+            </form>
+          </td>
+          <td>
+            <form method="get" action="{% url 'diaries:update' diary.pk %}">
+              <button type="submit" class="btn btn-outline-success" ;'>編集</button>
             </form>
           </td>
           <td>
